@@ -16,6 +16,7 @@ const App = () => {
 
   return (
     <div>
+
       <h1>Bienvenue sur notre site de collecte de déchets</h1>
       {isAuthenticated ? (
         <CollectionPointList />
