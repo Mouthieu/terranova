@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import CollectionPointList from './components/CollectionPointList';
+import LoginForm from './components/LoginForm';
 
-function App() {
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true); // Si le token existe, l'utilisateur est authentifié
+    } else {
+      setIsAuthenticated(false); // Sinon, il n'est pas authentifié
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Bienvenue sur notre site de collecte de déchets</h1>
+      {isAuthenticated ? (
+        <CollectionPointList />
+      ) : (
+        <LoginForm />
+      )}
     </div>
   );
-}
+};
 
 export default App;

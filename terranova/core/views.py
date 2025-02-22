@@ -16,7 +16,7 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
     serializer_class = CollectionPointSerializer
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated]) 
+# @permission_classes([IsAuthenticated]) 
 def subscribe(request, collection_point_id):
     user = request.user
     collection_point = CollectionPoint.objects.get(id=collection_point_id)
@@ -30,7 +30,7 @@ def subscribe(request, collection_point_id):
     return Response({'message': 'You have successfully subscribed to this collection point'}, status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated]) 
+# @permission_classes([IsAuthenticated]) 
 def unsubscribe(request, collection_point_id):
     user = request.user
     collection_point = CollectionPoint.objects.get(id=collection_point_id)
