@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Applications internes
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +70,12 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 WSGI_APPLICATION = 'terranova.wsgi.application'
 
