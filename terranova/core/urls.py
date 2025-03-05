@@ -10,4 +10,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('subscribe/<int:collection_point_id>/', views.subscribe),
     path('unsubscribe/<int:collection_point_id>/', views.unsubscribe),
+    path('add-collection-point/', views.add_collection_point),
 ]

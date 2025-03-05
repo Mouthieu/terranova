@@ -5,16 +5,18 @@ from django.conf import settings
 # Create your models here.
 class CollectionPoint(models.Model):
     name = models.CharField(max_length=255)
-    adress = models.TextField()
+    address = models.TextField()
     latitude = models.FloatField()
     longitude = models.FloatField()
+    subscribable = models.BooleanField(default=False)
 
     def __str__(self):
         return {
             'name': self.name,
-            'adress': self.adress,
+            'address': self.address,
             'latitude': self.latitude,
-            'longitude': self.longitude
+            'longitude': self.longitude,
+            'subscribable': self.subscribable
         }
 
 class Subscription(models.Model):

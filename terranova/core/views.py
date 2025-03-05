@@ -43,3 +43,25 @@ def unsubscribe(request, collection_point_id):
     # Supprimer l'abonnement
     subscription.delete()
     return Response({'message': 'You have successfully unsubscribed from this collection point'}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def add_collection_point(request):
+    try:
+        data = request.data
+        collection_point = CollectionPoint.objects.create(
+            name=data['name'],
+            address=data['address'],
+            latitude=data['latitude'],
+            longitude=data['longitude'],
+            subscribable=data['subscribable'],
+            # Ajoutez d'autres champs selon votre modèle
+        )
+        return Response({
+            'status': 'success',
+            'id': collection_point.id
+        })
+    except Exception as e:
+        return Response({
+            'status': 'error',
+            'message': str(e)
+        }, status=400)
