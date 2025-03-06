@@ -29,7 +29,6 @@ const RegisterForm = () => {
         setFormData({
           username: '',
           password: '',
-          email: ''
         });
       }
     } catch (error) {
@@ -74,6 +73,42 @@ const RegisterForm = () => {
           />
         </div>
         <div>
+          <label>Nom :</label>
+          <input
+            type="text"
+            name="last_name"
+            value={formData.last_name}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Prénom :</label>
+          <input
+            type="text"
+            name="first_name"
+            value={formData.first_name}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Téléphone :</label>
+          <input
+            type="text"
+            name="phone_number"
+            value={formData.phone_number}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Email :</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
           <label>Mot de passe :</label>
           <input
             type="password"
@@ -84,11 +119,11 @@ const RegisterForm = () => {
           />
         </div>
         <div>
-          <label>Email :</label>
+          <label>Confirmation du mot de passe :</label>
           <input
-            type="email"
-            name="email"
-            value={formData.email}
+            type="password"
+            name="confirm_password"
+            value={formData.confirm_password}
             onChange={handleChange}
             required
           />

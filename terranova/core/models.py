@@ -4,19 +4,25 @@ from django.conf import settings
 
 # Create your models here.
 class CollectionPoint(models.Model):
-    name = models.CharField(max_length=255)
     address = models.TextField()
     latitude = models.FloatField()
     longitude = models.FloatField()
-    subscribable = models.BooleanField(default=False)
+    public = models.BooleanField(default=False)
+    capacity = models.IntegerField(default=0)
+    horaires = models.CharField(max_length=100, blank=True, null=True)
+    photo = models.ImageField(upload_to='collection_points/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return {
-            'name': self.name,
             'address': self.address,
             'latitude': self.latitude,
             'longitude': self.longitude,
-            'subscribable': self.subscribable
+            'public': self.public,
+            'capacity': self.capacity,
+            'horaires': self.horaires,
+            'photo': self.photo
         }
 
 class Subscription(models.Model):

@@ -24,7 +24,6 @@ const CollectionPointList = () => {
     axios
       .get('http://127.0.0.1:8000/api/collection-points/', {})
       .then((response) => {
-        console.log("Données reçues:", response.data);
         setCollectionPoints(response.data);
       })
       .catch((error) => {
@@ -42,7 +41,7 @@ const CollectionPointList = () => {
         {collectionPoints.map(point => (
           <Marker key={point.id} position={[point.latitude, point.longitude]} icon={icon}>
             <Popup>
-              {point.name} <br /> {point.address}
+              {point.address}
               <SubscribeButton collectionPoint={point}/>
             </Popup>
           </Marker>

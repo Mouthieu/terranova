@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import CollectionPointSerializer
+from .serializers import CollectionPointSerializer, SubscriptionSerializer
 
 from .models import CollectionPoint, Subscription
 
@@ -49,19 +49,22 @@ def add_collection_point(request):
     try:
         data = request.data
         collection_point = CollectionPoint.objects.create(
-            name=data['name'],
-            address=data['address'],
-            latitude=data['latitude'],
-            longitude=data['longitude'],
-            subscribable=data['subscribable'],
-            # Ajoutez d'autres champs selon votre modèle
+            address=data.get('address'),
+            latitude=data.get('latitude'),
+            longitude=data.get('longitude'),
+            public=data.get('public', False),
+            capacity=data.get('capacity', 0),
+            horaires=data.get('horaires'),
+            photo=data.get('photo')
         )
-        return Response({
-            'status': 'success',
-            'id': collection_point.id
-        })
+        serializer = CollectionPointSerializer(collection_point)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     except Exception as e:
         return Response({
             'status': 'error',
             'message': str(e)
-        }, status=400)
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+class SubscriptionViewSet(viewsets.ModelViewSet):
+    queryset = Subscription.objects.all()
+    serializer_class = SubscriptionSerializer

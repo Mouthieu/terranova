@@ -6,8 +6,22 @@ const AddCollectionPoint = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const [formData, setFormData] = useState({
+        address: '',
+        capacity: '',
+        hours: '',
+        photo: null
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+          ...formData,
+          [e.target.name]: e.target.value
+        });
+      };
+
     const handleAddCollectionPoint = async () => {
-        if (!address) {
+        if (!formData.address) {
             setError('Veuillez entrer une adresse');
             return;
         }
@@ -30,11 +44,13 @@ const AddCollectionPoint = () => {
 
                 // Sauvegarder dans la base de données
                 const saveResponse = await axios.post('http://localhost:8000/api/add-collection-point/', {
-                    name: "Point de collecte",
-                    address: address,
+                    address: formData.address,
                     latitude: coordinates.latitude,
                     longitude: coordinates.longitude,
-                    subscribable: 0
+                    public: 0,
+                    capacity: formData.capacity,
+                    horaires: formData.horaires,
+                    photo: formData.photo
                 });
 
                 if (saveResponse.data) {
@@ -54,12 +70,37 @@ const AddCollectionPoint = () => {
 
     return (
         <div>
-            <div>
+            <div style={{display: 'flex', flexDirection: 'column', width: '200px'}}>
                 <input 
                     type="text" 
+                    name="address"
                     placeholder="Entrez une adresse" 
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
+                    value={formData.address}
+                    onChange={handleChange}
+                    disabled={loading}
+                />
+                <input
+                    type="number"
+                    name="capacity"
+                    placeholder="Capacité"
+                    value={formData.capacity}
+                    onChange={handleChange}
+                    disabled={loading}
+                />
+                <input
+                    type="text"
+                    name="horaires"
+                    placeholder="Horaires"
+                    value={formData.horaires}
+                    onChange={handleChange}
+                    disabled={loading}
+                />
+                <input
+                    type="file"
+                    name="photo"
+                    placeholder="Photo"
+                    value={formData.photo}
+                    onChange={handleChange}
                     disabled={loading}
                 />
                 <button 
