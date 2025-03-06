@@ -1,0 +1,96 @@
+.map-container {
+    width: 100%;
+    height: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.map-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.map-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.marker-icon-green {
+    color: #4CAF50;
+}
+
+.marker-icon-orange {
+    color: #FF9800;
+}
+
+.compost-info-card {
+    min-width: 200px;
+    padding: 10px;
+}
+
+.compost-info-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.compost-info-list {
+    margin: 0;
+    padding: 0;
+}
+
+.compost-info-item {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0;
+}
+
+.subscribe-button {
+    background: #FF9800;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.location-input {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 300px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+}
+
+.map-page-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px 0;
+} 

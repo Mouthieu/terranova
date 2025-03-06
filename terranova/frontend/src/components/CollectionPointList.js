@@ -1,23 +1,22 @@
-import axios from 'axios';
-// import * as React from 'react';
-import L from 'leaflet';
 import React, { useEffect, useState } from 'react';
-
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import L from 'leaflet';
+import axios from 'axios';
+import '../styles/CollectionPointList.css';
 import SubscribeButton from './SubscribeButton';
- 
+
 const CollectionPointList = () => {
   const [collectionPoints, setCollectionPoints] = useState([]);
   const token = localStorage.getItem('token');
 
   const icon = new L.Icon({
-    iconUrl: 'https://unpkg.com/leaflet/dist/images/marker-icon.png', // chemin vers l'icône par défaut
-    iconSize: [25, 41], // dimensions de l'icône
-    iconAnchor: [12, 41], // point d'ancrage du marqueur
-    popupAnchor: [1, -34], // point d'ancrage du popup
-    shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png', // ombre du marqueur
-    shadowSize: [41, 41], // taille de l'ombre
-    shadowAnchor: [12, 41], // point d'ancrage de l'ombre
+    iconUrl: 'https://unpkg.com/leaflet/dist/images/marker-icon.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
+    shadowSize: [41, 41],
+    shadowAnchor: [12, 41],
   });
 
   useEffect(() => {
@@ -32,25 +31,37 @@ const CollectionPointList = () => {
   }, [token]);
 
   return (
-    <div>
-      <h2>Points de collecte</h2>
-      <MapContainer center={[48.8566, 2.3522]} zoom={12} style={{ height: "500px", width: "50%" }}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {collectionPoints.map(point => (
-          <Marker key={point.id} position={[point.latitude, point.longitude]} icon={icon}>
-            <Popup>
-              {point.address}
-              <SubscribeButton collectionPoint={point}/>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
+    <div className="map-page-container">
+      <h1 className="map-title">Carte des composteurs</h1>
+      <p className="map-description">
+        Découvrez les composteurs publics 📍 et les composteurs particuliers 📍 proches de chez vous.
+        <br />Participez au compostage collectif dès à présent !
+      </p>
+      <div className="map-container">
+        <MapContainer center={[48.3905, -4.4860]} zoom={13} style={{ height: "100%", width: "100%" }}>
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          {collectionPoints.map(point => (
+            <Marker key={point.id} position={[point.latitude, point.longitude]} icon={icon}>
+              <Popup>
+                <div className="compost-info-card">
+                  <h3 className="compost-info-title">
+                    {point.public ? 'Composteur public' : 'Composteur particulier'}
+                  </h3>
+                  <div className="compost-info-list">
+                    <p className="compost-info-item">Localisation : {point.address}</p>
+                    <SubscribeButton collectionPoint={point} className="subscribe-button"/>
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+          <div className="location-input">
+            <input type="text" placeholder="Localisation" className="form-input" />
+          </div>
+        </MapContainer>
+      </div>
     </div>
   );
-  
-  
 };
 
 export default CollectionPointList;

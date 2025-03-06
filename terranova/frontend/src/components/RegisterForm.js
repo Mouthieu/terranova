@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/RegisterForm.css';
 import axios from 'axios';
 
 const RegisterForm = () => {
@@ -57,78 +58,94 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="register-form">
-      <h2>Inscription</h2>
-      {success && <p style={{ color: 'green' }}>Inscription réussie ! Vous pouvez maintenant vous connecter.</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="register-container">
+      <h2 className="register-title">S'inscrire</h2>
+      {success && <p className="success-message">Inscription réussie ! Vous pouvez maintenant vous connecter.</p>}
+      {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nom d'utilisateur :</label>
+        <div className="form-group">
+          <label className="form-label">Nom d'utilisateur</label>
           <input
+            className="form-input"
             type="text"
             name="username"
             value={formData.username}
             onChange={handleChange}
             required
+            placeholder="Value"
           />
         </div>
-        <div>
-          <label>Nom :</label>
-          <input
-            type="text"
-            name="last_name"
-            value={formData.last_name}
-            onChange={handleChange}
-          />
+        <div className="form-row">
+          <div className="form-group">
+            <label className="form-label">Nom</label>
+            <input
+              className="form-input"
+              type="text"
+              name="last_name"
+              value={formData.last_name}
+              onChange={handleChange}
+              placeholder="Value"
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Prénom</label>
+            <input
+              className="form-input"
+              type="text"
+              name="first_name"
+              value={formData.first_name}
+              onChange={handleChange}
+              placeholder="Value"
+            />
+          </div>
         </div>
-        <div>
-          <label>Prénom :</label>
+        <div className="form-group">
+          <label className="form-label">Numéro Tél</label>
           <input
-            type="text"
-            name="first_name"
-            value={formData.first_name}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Téléphone :</label>
-          <input
-            type="text"
+            className="form-input"
+            type="tel"
             name="phone_number"
             value={formData.phone_number}
             onChange={handleChange}
+            placeholder="Value"
           />
         </div>
-        <div>
-          <label>Email :</label>
+        <div className="form-group">
+          <label className="form-label">Email</label>
           <input
+            className="form-input"
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
+            placeholder="Value"
           />
         </div>
-        <div>
-          <label>Mot de passe :</label>
+        <div className="form-group">
+          <label className="form-label">Mot de passe</label>
           <input
+            className="form-input"
             type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
             required
+            placeholder="Value"
           />
         </div>
-        <div>
-          <label>Confirmation du mot de passe :</label>
+        <div className="form-group">
+          <label className="form-label">Confirmez le Mot de passe</label>
           <input
+            className="form-input"
             type="password"
             name="confirm_password"
             value={formData.confirm_password}
             onChange={handleChange}
             required
+            placeholder="Value"
           />
         </div>
-        <button type="submit">S'inscrire</button>
+        <button type="submit" className="submit-button">Envoyer</button>
       </form>
     </div>
   );

@@ -1,0 +1,73 @@
+.guide-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.guide-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.guide-section {
+    background-color: rgba(255, 248, 225, 0.5);
+    border-radius: 0;
+    padding: 30px;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.guide-section:first-of-type {
+    border-radius: 20px 20px 0 0;
+}
+
+.guide-section:last-of-type {
+    border-radius: 0 0 20px 20px;
+}
+
+.guide-section.reverse {
+    flex-direction: row-reverse;
+}
+
+.guide-content {
+    flex: 1;
+}
+
+.guide-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.guide-explanations {
+    font-family: 'Inter', sans-serif;
+}
+
+.guide-explanations h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.guide-explanations p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.guide-image {
+    width: 40%;
+    border-radius: 15px;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+    margin-top: 0;
+} 

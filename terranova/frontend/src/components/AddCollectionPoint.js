@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import '../styles/AddCollectionPoint.css';
 import axios from 'axios';
 
 const AddCollectionPoint = () => {
-    const [address, setAddress] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [address, setAddress] = React.useState('');
+    const [loading, setLoading] = React.useState(false);
+    const [error, setError] = React.useState(null);
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = React.useState({
         address: '',
         capacity: '',
         hours: '',
@@ -69,9 +70,13 @@ const AddCollectionPoint = () => {
     };
 
     return (
-        <div>
-            <div style={{display: 'flex', flexDirection: 'column', width: '200px'}}>
+        <div className="add-compost-container">
+            <h1 className="add-compost-title">Ajouter un compost</h1>
+            
+            <div className="form-group">
+                <label className="form-label">Adresse</label>
                 <input 
+                    className="form-input"
                     type="text" 
                     name="address"
                     placeholder="Entrez une adresse" 
@@ -79,7 +84,12 @@ const AddCollectionPoint = () => {
                     onChange={handleChange}
                     disabled={loading}
                 />
+            </div>
+
+            <div className="form-group">
+                <label className="form-label">Capacité max</label>
                 <input
+                    className="form-input"
                     type="number"
                     name="capacity"
                     placeholder="Capacité"
@@ -87,7 +97,12 @@ const AddCollectionPoint = () => {
                     onChange={handleChange}
                     disabled={loading}
                 />
+            </div>
+
+            <div className="form-group">
+                <label className="form-label">Horaires</label>
                 <input
+                    className="form-input"
                     type="text"
                     name="horaires"
                     placeholder="Horaires"
@@ -95,22 +110,29 @@ const AddCollectionPoint = () => {
                     onChange={handleChange}
                     disabled={loading}
                 />
+            </div>
+
+            <div className="form-group">
+                <label className="form-label">Photo</label>
                 <input
+                    className="form-input"
                     type="file"
                     name="photo"
-                    placeholder="Photo"
-                    value={formData.photo}
+                    accept="image/*"
                     onChange={handleChange}
                     disabled={loading}
                 />
-                <button 
-                    onClick={handleAddCollectionPoint}
-                    disabled={loading}
-                >
-                    {loading ? 'En cours...' : 'Ajouter'}
-                </button>
             </div>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+
+            <button 
+                className="submit-button"
+                onClick={handleAddCollectionPoint}
+                disabled={loading}
+            >
+                {loading ? 'En cours...' : 'Valider'}
+            </button>
+
+            {error && <p className="error-message">{error}</p>}
         </div>
     );
 };
