@@ -36,3 +36,69 @@
     transform: rotate(360deg);
   }
 }
+
+/* Styles pour le formulaire d'inscription */
+.register-form {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.register-form h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.register-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.register-form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
+}
+
+.register-form label {
+  font-weight: 500;
+  color: #555;
+}
+
+.register-form input,
+.register-form textarea {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.register-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.register-form button {
+  background-color: #2ecc71;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.register-form button:hover {
+  background-color: #27ae60;
+}
+
+.register-form button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}

@@ -4,7 +4,7 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'phone_number', 'address', 'created_at')
+        fields = ('id', 'username', 'email', 'created_at')
         read_only_fields = ('created_at',)
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -12,14 +12,12 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'phone_number', 'address')
+        fields = ('username', 'email', 'password')
 
     def create(self, validated_data):
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data.get('email', ''),
-            password=validated_data['password'],
-            phone_number=validated_data.get('phone_number', ''),
-            address=validated_data.get('address', '')
+            password=validated_data['password']
         )
         return user 
