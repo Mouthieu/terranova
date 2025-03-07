@@ -2,22 +2,23 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import '../styles/LoginForm.css';
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = ({ isAuthenticated, setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/login/', {
-        username,
-        password,
+        username: formData.username,
+        password: formData.password,
       });
-
-      // Stocke le token dans localStorage
-      localStorage.setItem('token', response.data.access);
-
+      localStorage.setItem('authenticated', true);
       // Actualise l'état de l'application pour afficher les points de collecte
       window.location.reload();
     } catch (error) {
@@ -35,10 +36,10 @@ const LoginForm = ({ onLogin }) => {
           <input
             className="form-input"
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={formData.username}
+            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
             required
-            placeholder="Value"
+            placeholder="..."
           />
         </div>
         <div className="form-group">
@@ -46,13 +47,13 @@ const LoginForm = ({ onLogin }) => {
           <input
             className="form-input"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             required
-            placeholder="Value"
+            placeholder="..."
           />
         </div>
-        <button type="submit" className="submit-button">Valider</button>
+        <button type="submit" className="submit-button" onClick={handleSubmit}>Valider</button>
         <div className="form-links">
           <a href="#" className="form-link">Mot de passe oublié ?</a>
           <a href="#" className="form-link">S'inscrire</a>

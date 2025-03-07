@@ -6,37 +6,42 @@ import GuideImg1 from '../imgs/GuideImg1.jpeg';
 const GuidePratique = () => {
   const [guideItems, setGuideItems] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get('http://127.0.0.1:8000/api/guide-items/', {})
-      .then((response) => {
-        setGuideItems(response.data);
-      })
-      .catch((error) => {
-        console.error('Erreur lors de la récupération des guides', error);
-        // Données de fallback en cas d'erreur
-        setGuideItems([
-          {
-            id: 1,
-            title: "Que mettre dans son composteur ?",
-            explanations: [
-              "Les déchets verts, les épluchures de fruits et légumes, le marc de café, les coquilles d'œufs, les feuilles mortes...",
-              "Les restes de repas (sans viande ni poisson), les serviettes en papier, le carton brun, les sachets de thé..."
-            ],
-            image: GuideImg1
-          },
-          {
-            id: 2,
-            title: "Que ne pas mettre dans son composteur ?",
-            explanations: [
-              "Les déchets plastiques, les métaux, les produits chimiques, les restes de viande et de poisson...",
-              "Les matériaux non biodégradables, les agrumes en grande quantité, les produits laitiers..."
-            ],
-            image: GuideImg1
-          }
-        ]);
-      });
-  }, []);
+  useState(() => {
+    setGuideItems([
+      {
+        id: 1,
+        title: "Que mettre dans son composteur ?",
+        explanations: [
+          "Les déchets verts, les épluchures de fruits et légumes, le marc de café, les coquilles d'œufs, les feuilles mortes...",
+          "Les restes de repas (sans viande ni poisson), les serviettes en papier, le carton brun, les sachets de thé..."
+        ],
+        image: GuideImg1
+      },
+      {
+        id: 2,
+        title: "Que ne pas mettre dans son composteur ?",
+        explanations: [
+          "Les déchets plastiques, les métaux, les produits chimiques, les restes de viande et de poisson...",
+          "Les matériaux non biodégradables, les agrumes en grande quantité, les produits laitiers..."
+        ],
+        image: GuideImg1
+      }
+    ]);
+  })
+  
+  // useEffect(() => {
+  //   axios
+  //     .get('http://127.0.0.1:8000/api/guide-items/', {})
+  //     .then((response) => {
+  //       setGuideItems(response.data);
+  //     })
+  //   //   .catch((error) => {
+  //   //     console.error('Erreur lors de la récupération des guides', error);
+  //       // Données de fallback en cas d'erreur
+        
+  //     });
+  // }
+  // , []);
 
   return (
     <div className="guide-container">

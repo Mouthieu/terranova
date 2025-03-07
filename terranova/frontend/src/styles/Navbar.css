@@ -51,8 +51,20 @@
     transition: background-color 0.3s;
 }
 
+.invert {
+    /* Invert color */
+    color: #00A3FF;
+    background-color: white;
+    border: 1px solid #00A3FF;
+}
+
 .signup-button:hover {
     background-color: #0091EA;
+}
+
+.invert:hover {
+    background-color: #0091EA;
+    color: white;
 }
 
 .profile-icon {

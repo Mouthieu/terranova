@@ -9,14 +9,10 @@ import RegisterForm from './components/RegisterForm';
 import GuidePratique from './components/GuidePratique';
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [mapInstance, setMapInstance] = useState(null);
-  const [viewInstance, setViewInstance] = useState(null);
-  const [showRegister, setShowRegister] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
+    if (localStorage.getItem('authenticated')) {
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);
@@ -26,10 +22,10 @@ const App = () => {
   return (
     <div className="app-container">
       <Router>
-        <Navbar />
+        <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
         <main className="main-content">
           <RegisterForm />
-          <LoginForm />
+          <LoginForm/>
           <AddCollectionPoint />
           <CollectionPointList />
           <GuidePratique />

@@ -24,12 +24,22 @@ const RegisterForm = () => {
     setSuccess(false);
 
     try {
+      if (formData.password !== formData.confirm_password) {
+        setError('Les mots de passe ne correspondent pas');
+        return;
+      }
+
       const response = await axios.post('http://127.0.0.1:8000/api/users/', formData);
       if (response.status === 201) {
         setSuccess(true);
         setFormData({
           username: '',
           password: '',
+          email: '',
+          last_name: '',
+          first_name: '',
+          phone_number: '',
+          confirm_password: '',
         });
       }
     } catch (error) {
@@ -64,7 +74,7 @@ const RegisterForm = () => {
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label className="form-label">Nom d'utilisateur</label>
+          <label className="form-label">Nom d'utilisateur*</label>
           <input
             className="form-input"
             type="text"
@@ -72,7 +82,7 @@ const RegisterForm = () => {
             value={formData.username}
             onChange={handleChange}
             required
-            placeholder="Value"
+            placeholder="..."
           />
         </div>
         <div className="form-row">
@@ -84,45 +94,47 @@ const RegisterForm = () => {
               name="last_name"
               value={formData.last_name}
               onChange={handleChange}
-              placeholder="Value"
+              placeholder="..."
             />
           </div>
           <div className="form-group">
-            <label className="form-label">Prénom</label>
+            <label className="form-label">Prénom*</label>
             <input
               className="form-input"
               type="text"
               name="first_name"
               value={formData.first_name}
               onChange={handleChange}
-              placeholder="Value"
+              required
+              placeholder="..."
             />
           </div>
         </div>
         <div className="form-group">
-          <label className="form-label">Numéro Tél</label>
+          <label className="form-label">Numéro de Téléphone</label>
           <input
             className="form-input"
             type="tel"
             name="phone_number"
             value={formData.phone_number}
             onChange={handleChange}
-            placeholder="Value"
+            placeholder="..."
           />
         </div>
         <div className="form-group">
-          <label className="form-label">Email</label>
+          <label className="form-label">Email*</label>
           <input
             className="form-input"
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="Value"
+            required
+            placeholder="..."
           />
         </div>
         <div className="form-group">
-          <label className="form-label">Mot de passe</label>
+          <label className="form-label">Mot de passe*</label>
           <input
             className="form-input"
             type="password"
@@ -130,11 +142,11 @@ const RegisterForm = () => {
             value={formData.password}
             onChange={handleChange}
             required
-            placeholder="Value"
+            placeholder="..."
           />
         </div>
         <div className="form-group">
-          <label className="form-label">Confirmez le Mot de passe</label>
+          <label className="form-label">Confirmez le Mot de passe*</label>
           <input
             className="form-input"
             type="password"
@@ -142,10 +154,10 @@ const RegisterForm = () => {
             value={formData.confirm_password}
             onChange={handleChange}
             required
-            placeholder="Value"
+            placeholder="..."
           />
         </div>
-        <button type="submit" className="submit-button">Envoyer</button>
+        <button type="submit" className="submit-button" onClick={handleSubmit}>Envoyer</button>
       </form>
     </div>
   );
