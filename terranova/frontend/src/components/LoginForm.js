@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import '../styles/LoginForm.css';
 
-const LoginForm = () => {
+const LoginForm = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,28 +27,36 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
-      <h1>Se connecter</h1>
+    <div className="login-container">
+      <h1 className="login-title">Se connecter</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nom d'utilisateur</label>
+        <div className="form-group">
+          <label className="form-label">Nom d'utilisateur</label>
           <input
+            className="form-input"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            placeholder="Value"
           />
         </div>
-        <div>
-          <label>Mot de passe</label>
+        <div className="form-group">
+          <label className="form-label">Mot de passe</label>
           <input
+            className="form-input"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder="Value"
           />
         </div>
-        <button type="submit">Se connecter</button>
+        <button type="submit" className="submit-button">Valider</button>
+        <div className="form-links">
+          <a href="#" className="form-link">Mot de passe oublié ?</a>
+          <a href="#" className="form-link">S'inscrire</a>
+        </div>
       </form>
     </div>
   );

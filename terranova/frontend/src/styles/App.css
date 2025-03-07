@@ -1,0 +1,16 @@
+.app-container {
+    min-height: 100vh;
+    background-color: white;
+}
+
+.main-content {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Style pour que tous les conteneurs directs dans main-content prennent aussi 80% */
+.main-content > * {
+    width: 100%;
+    margin-bottom: 20px;
+} 

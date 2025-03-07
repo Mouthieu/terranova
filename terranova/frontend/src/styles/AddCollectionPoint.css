@@ -1,0 +1,82 @@
+.add-compost-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 15px 40px 40px 40px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.add-compost-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #333;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    border-color: #2196F3;
+}
+
+.form-input::placeholder {
+    color: #999;
+}
+
+.form-input[type="file"] {
+    padding: 8px;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 14px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background: #444;
+}
+
+.submit-button:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: #D32F2F;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    margin-top: 8px;
+} 
