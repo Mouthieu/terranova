@@ -12,6 +12,8 @@ class CollectionPointSerializer(serializers.ModelSerializer):
             'public',
             'capacity',
             'horaires',
+            'owner',
+            'subscribers',
             'photo',
             'created_at',
             'updated_at'

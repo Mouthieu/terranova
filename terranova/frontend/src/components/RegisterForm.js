@@ -34,12 +34,14 @@ const RegisterForm = () => {
         setSuccess(true);
         setFormData({
           username: '',
-          password: '',
-          email: '',
-          last_name: '',
-          first_name: '',
           phone_number: '',
+          email: '',
+          address: '',
+          quiz_score: 0,
+          password: '',
           confirm_password: '',
+          first_name: '',
+          last_name: '',
         });
       }
     } catch (error) {

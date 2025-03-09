@@ -13,12 +13,13 @@ const CollectionPointList = () => {
 
   const green_icon = new L.Icon({
     iconUrl: marker_icon_green,
-    iconSize: [30, 41],
-    iconAnchor: [12, 41],
+    iconSize: [25, 35],
+    iconAnchor: [12, 30],
     popupAnchor: [1, -34],
     shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
     shadowSize: [41, 41],
     shadowAnchor: [12, 41],
+    className: 'green-icon icon',
   });
 
   const yellow_icon = new L.Icon({
@@ -29,6 +30,7 @@ const CollectionPointList = () => {
     shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
     shadowSize: [41, 41],
     shadowAnchor: [12, 41],
+    className: 'yellow-icon icon',
   });
 
   useEffect(() => {
