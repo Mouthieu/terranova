@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/RegisterForm.css';
 import axios from 'axios';
 
-const RegisterForm = () => {
+const RegisterForm = ({ setIsRegistered, setIsAuthenticated }) => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -43,6 +43,8 @@ const RegisterForm = () => {
           first_name: '',
           last_name: '',
         });
+        setIsRegistered(true);
+        setIsAuthenticated(true);
       }
     } catch (error) {
       // Gestion améliorée des erreurs

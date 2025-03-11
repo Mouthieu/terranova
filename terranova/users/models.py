@@ -26,5 +26,5 @@ class User(AbstractUser):
             'first_name': self.first_name,
             'last_name': self.last_name,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
         }

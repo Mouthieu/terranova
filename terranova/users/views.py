@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from .models import User
 from .serializers import UserSerializer, UserCreateSerializer
+from core.models import CollectionPoint
+from core.serializers import CollectionPointSerializer
 
 # Create your views here.
 
@@ -44,3 +46,9 @@ class UserViewSet(viewsets.ModelViewSet):
     def me(self, request):
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
+
+@api_view(['GET'])
+def get_composters(request):
+    composters = CollectionPoint.objects.filter(owner=request.user)
+    serializer = CollectionPointSerializer(composters, many=True)
+    return Response(serializer.data)

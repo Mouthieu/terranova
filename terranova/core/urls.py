@@ -11,4 +11,6 @@ urlpatterns = [
     path('subscribe/<int:collection_point_id>/', views.subscribe),
     path('unsubscribe/<int:collection_point_id>/', views.unsubscribe),
     path('add-collection-point/', views.add_collection_point),
+    path('get-collection-points-owner/<int:owner_id>/', views.get_collection_points_owner),
+    path('delete-collection-point/<int:collection_point_id>/', views.delete_collection_point),
 ]

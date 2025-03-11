@@ -7,9 +7,33 @@ import LoginForm from './components/LoginForm';
 import AddCollectionPoint from './components/AddCollectionPoint';
 import RegisterForm from './components/RegisterForm';
 import GuidePratique from './components/GuidePratique';
+import Profile from './components/Profile';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState();
+  const [isRegistered, setIsRegistered] = useState()
+  const [isAddCollectionPoint, setIsAddCollectionPoint] = useState()
+  const [connecting, setConnecting] = useState()
+  const [registering, setRegistering] = useState()
+  const [checkingProfile, setCheckingProfile] = useState()
+
+  const [compostersData, setCompostersData] = useState()
+
+  const handleCondition = (string) => {
+    if (string === "collectionPointList") {
+      return !registering && !connecting && !isAddCollectionPoint && !checkingProfile
+    } else if (string === "guide") {
+      return !registering && !connecting && !isAddCollectionPoint && !checkingProfile
+    } else if (string === "registering") {
+      return registering && !connecting && !isAddCollectionPoint && !isAuthenticated && !isRegistered && !checkingProfile
+    } else if (string === "connecting") {
+      return !registering && connecting && !isAddCollectionPoint && !isAuthenticated && !isRegistered && !checkingProfile
+    } else if (string === "addCollectionPoint") {
+      return !registering && !connecting && isAddCollectionPoint && !checkingProfile
+    } else if (string === "profile") {
+      return !registering && !connecting && !isAddCollectionPoint && checkingProfile
+    }
+  }
 
   useEffect(() => {
     if (localStorage.getItem('authenticated')) {
@@ -22,37 +46,17 @@ const App = () => {
   return (
     <div className="app-container">
       <Router>
-        <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
+        <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} setIsRegistered={setIsRegistered} setConnecting={setConnecting} setRegistering={setRegistering} setCheckingProfile={setCheckingProfile} setIsAddCollectionPoint={setIsAddCollectionPoint}/>
         <main className="main-content">
-          <RegisterForm />
-          <LoginForm/>
-          <AddCollectionPoint />
-          <CollectionPointList />
-          <GuidePratique />
+          {handleCondition("collectionPointList") && <CollectionPointList />}
+          {handleCondition("guide")               && <GuidePratique />}
+          {handleCondition("registering")         && <RegisterForm        setIsRegistered={setIsRegistered} setIsAuthenticated={setIsAuthenticated} setRegistering={setRegistering}/>}
+          {handleCondition("connecting")          && <LoginForm setCompostersData={setCompostersData}/>}
+          {handleCondition("addCollectionPoint")  && <AddCollectionPoint  setIsAddCollectionPoint={setIsAddCollectionPoint}/>}
+          {handleCondition("profile")             && <Profile             setIsAddCollectionPoint={setIsAddCollectionPoint} setCheckingProfile={setCheckingProfile} compostersData={compostersData}/>}
         </main>
       </Router>
     </div>
-    // <div>
-    //   <h1>Bienvenue sur notre site de collecte de déchets</h1>
-    //   <RegisterForm />
-    //   {!isAuthenticated ? (
-    //     <div>
-    //       <LoginForm />
-    //       <button 
-    //         onClick={() => setShowRegister(!showRegister)}
-    //         style={{ margin: '20px', padding: '10px 20px', backgroundColor: '#3498db', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-    //       >
-    //         {showRegister ? 'Se connecter' : 'S\'inscrire'}
-    //       </button>
-    //       {/* {showRegister && <RegisterForm />} */}
-    //     </div>
-    //   ) : (
-    //     <div>
-    //       <CollectionPointList />
-    //       <AddCollectionPoint />
-    //     </div>
-    //   )}
-    // </div>
   );
 };
 

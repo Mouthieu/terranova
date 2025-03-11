@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/AddCollectionPoint.css';
 import axios from 'axios';
 
-const AddCollectionPoint = () => {
+const AddCollectionPoint = ({ setIsAddCollectionPoint }) => {
     const [formData, setFormData] = useState({
         address: '',
         code_postal: '',
@@ -22,10 +22,31 @@ const AddCollectionPoint = () => {
     };
 
     const handleAddCollectionPoint = async () => {
-        if (!formData.address || !formData.code_postal || !formData.ville) {
+        if (!localStorage.getItem('authenticated')) {
+            setError('Vous devez être connecté pour ajouter un point de collecte');
+            return;
+        }
+
+        if (!formData.address) {
             setError('Veuillez remplir tous les champs obligatoires');
             return;
         }
+
+        // if (!formData.ville) {
+        //     formData.ville = '...';
+        // }
+
+        // if (!formData.capacity) {
+        //     formData.capacity = 3;
+        // }
+
+        // if (!formData.horaires) {
+        //     formData.horaires = '...';
+        // }
+
+        // if (!formData.photo) {
+        //     formData.photo = null;
+        // }
 
         setLoading(true);
         setError(null);
@@ -50,6 +71,8 @@ const AddCollectionPoint = () => {
 
                 console.log("Coordonnées trouvées:", coordinates);
 
+                const user = JSON.parse(localStorage.getItem('user_info')).user;
+
                 // Sauvegarder dans la base de données
                 const saveResponse = await axios.post('http://localhost:8000/api/add-collection-point/', {
                     address: formData.address,
@@ -57,16 +80,21 @@ const AddCollectionPoint = () => {
                     ville: formData.ville,
                     latitude: coordinates.latitude,
                     longitude: coordinates.longitude,
-                    public: 0,
+                    public: 0, 
                     capacity: parseInt(formData.capacity) || 0,
                     horaires: formData.horaires,
-                    photo: formData.photo
+                    photo: formData.photo,
+                    owner: parseInt(user.id)
                 });
 
                 console.log("Réponse du backend:", saveResponse.data);
 
                 if (saveResponse.data) {
                     alert('Point de collecte ajouté avec succès !');
+                    let composters = JSON.parse(localStorage.getItem('composters'))
+                    composters.push(saveResponse.data)
+                    localStorage.setItem('composters', JSON.stringify(composters))
+                    setIsAddCollectionPoint(false);
                     setFormData({
                         address: '',
                         code_postal: '',
@@ -75,6 +103,7 @@ const AddCollectionPoint = () => {
                         horaires: '',
                         photo: null
                     });
+                    window.location.reload();
                 }
             } else {
                 setError('Adresse non trouvée. Vérifiez que l\'adresse, le code postal et la ville sont corrects.');
@@ -92,7 +121,7 @@ const AddCollectionPoint = () => {
             <h1 className="add-compost-title">Ajouter un compost</h1>
             
             <div className="form-group">
-                <label className="form-label">Adresse</label>
+                <label className="form-label">Adresse*</label>
                 <input 
                     className="form-input"
                     type="text" 

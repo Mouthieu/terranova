@@ -13,14 +13,35 @@ const LoginForm = ({ isAuthenticated, setIsAuthenticated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/login/', {
         username: formData.username,
         password: formData.password,
-      });
+      })
+      // .then(async (response) => {
+      //   const user_id = response.data.user.id
+      //   const composters = await axios.get('http://127.0.0.1:8000/api/get-collection-points-owner/' + user_id)
+      //   response.data.user.composters = composters.data
+
+      //   console.log(response.data)
+      //   localStorage.setItem('authenticated', true);
+      //   localStorage.setItem('user_info', JSON.stringify(response.data));
+        
+      //   window.location.reload();
+      // })
+      // .catch((error) => {
+      //   console.error('Erreur lors de la connexion', error);
+      //   alert('Nom d\'utilisateur ou mot de passe incorrect');
+      // })
+      const user_id = response.data.user.id
+      const composters = await axios.get('http://127.0.0.1:8000/api/get-collection-points-owner/' + user_id)
+      localStorage.setItem('user_info', JSON.stringify(response.data))
+      localStorage.setItem('composters', JSON.stringify(composters.data))
       localStorage.setItem('authenticated', true);
-      // Actualise l'état de l'application pour afficher les points de collecte
       window.location.reload();
+
+      // Actualise l'état de l'application pour afficher les points de collecte
     } catch (error) {
       console.error('Erreur lors de la connexion', error);
       alert('Nom d\'utilisateur ou mot de passe incorrect');

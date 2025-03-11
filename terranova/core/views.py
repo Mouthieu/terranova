@@ -44,10 +44,16 @@ def unsubscribe(request, collection_point_id):
     subscription.delete()
     return Response({'message': 'You have successfully unsubscribed from this collection point'}, status=status.HTTP_200_OK)
 
+User = get_user_model()
+
 @api_view(['POST'])
 def add_collection_point(request):
     try:
         data = request.data
+        # Récupérer l'utilisateur à partir de l'ID
+        owner_id = data.get('owner')
+        owner = User.objects.get(id=owner_id) if owner_id else None
+
         collection_point = CollectionPoint.objects.create(
             address=data.get('address'),
             latitude=data.get('latitude'),
@@ -55,10 +61,34 @@ def add_collection_point(request):
             public=data.get('public', False),
             capacity=data.get('capacity', 0),
             horaires=data.get('horaires'),
-            photo=data.get('photo')
+            photo=data.get('photo'),
+            owner=owner  # Utiliser l'objet User récupéré
         )
         serializer = CollectionPointSerializer(collection_point)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    except User.DoesNotExist:
+        return Response({
+            'status': 'error',
+            'message': 'Utilisateur non trouvé'
+        }, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({
+            'status': 'error',
+            'message': str(e)
+        }, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['DELETE'])
+def delete_collection_point(request, collection_point_id):
+    collection_point = CollectionPoint.objects.get(id=collection_point_id)
+    collection_point.delete()
+    return Response({'message': 'Collection point deleted successfully'}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_collection_points_owner(request, owner_id):
+    try:
+        collection_points = CollectionPoint.objects.filter(owner=owner_id)
+        serializer = CollectionPointSerializer(collection_points, many=True)
+        return Response(serializer.data)
     except Exception as e:
         return Response({
             'status': 'error',
