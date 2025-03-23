@@ -3,6 +3,7 @@ from django.conf import settings
 
 # Create your models here.
 class CollectionPoint(models.Model):
+    id = models.AutoField(primary_key=True)
     address = models.TextField()
     latitude = models.FloatField()
     longitude = models.FloatField()
@@ -17,20 +18,22 @@ class CollectionPoint(models.Model):
 
     def __str__(self):
         return {
-            'address': self.address,
-            'latitude': self.latitude,
-            'longitude': self.longitude,
-            'public': self.public,
-            'capacity': self.capacity,
-            'horaires': self.horaires,
-            'photo': self.photo,
+            'id'         : self.id,
+            'address'    : self.address,
+            'latitude'   : self.latitude,
+            'longitude'  : self.longitude,
+            'public'     : self.public,
+            'capacity'   : self.capacity,
+            'horaires'   : self.horaires,
+            'photo'      : self.photo,
             'subscribers': self.subscribers,
-            'owner': self.owner,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'owner'      : self.owner,
+            'created_at' : self.created_at,
+            'updated_at' : self.updated_at
         }
 
 class Subscription(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='subscriptions')
     collection_point = models.ForeignKey(CollectionPoint, on_delete=models.CASCADE, related_name='subscriptions')
     subscribet_at = models.DateTimeField(auto_now_add=True)
@@ -40,6 +43,7 @@ class Subscription(models.Model):
 
     def __str__(self):
         return {
+            'id': self.id,
             'user': self.user,
             'collection_point': self.collection_point,
             'subscribet_at': self.subscribet_at

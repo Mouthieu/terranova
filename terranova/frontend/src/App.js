@@ -16,6 +16,7 @@ const App = () => {
   const [connecting, setConnecting] = useState()
   const [registering, setRegistering] = useState()
   const [checkingProfile, setCheckingProfile] = useState()
+  const [updateProfile, setUpdateProfile] = useState()
 
   const [compostersData, setCompostersData] = useState()
 
@@ -46,15 +47,48 @@ const App = () => {
   return (
     <div className="app-container">
       <Router>
-        <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} setIsRegistered={setIsRegistered} setConnecting={setConnecting} setRegistering={setRegistering} setCheckingProfile={setCheckingProfile} setIsAddCollectionPoint={setIsAddCollectionPoint}/>
+        <Navbar
+          isAuthenticated={isAuthenticated}
+          setIsAuthenticated={setIsAuthenticated}
+          setIsRegistered={setIsRegistered}
+          setConnecting={setConnecting}
+          setRegistering={setRegistering}
+          setCheckingProfile={setCheckingProfile}
+          setIsAddCollectionPoint={setIsAddCollectionPoint}
+          setUpdateProfile={setUpdateProfile}
+        />
         <main className="main-content">
-          {handleCondition("collectionPointList") && <CollectionPointList />}
-          {handleCondition("guide")               && <GuidePratique />}
-          {handleCondition("registering")         && <RegisterForm        setIsRegistered={setIsRegistered} setIsAuthenticated={setIsAuthenticated} setRegistering={setRegistering}/>}
-          {handleCondition("connecting")          && <LoginForm setCompostersData={setCompostersData}/>}
-          {handleCondition("addCollectionPoint")  && <AddCollectionPoint  setIsAddCollectionPoint={setIsAddCollectionPoint}/>}
-          {handleCondition("profile")             && <Profile             setIsAddCollectionPoint={setIsAddCollectionPoint} setCheckingProfile={setCheckingProfile} compostersData={compostersData}/>}
-        </main>
+          {handleCondition("collectionPointList") && 
+            <CollectionPointList 
+              isAuthenticated={isAuthenticated}
+            />
+          }
+          {handleCondition("guide") && 
+            <GuidePratique />
+          }
+          {handleCondition("registering") && 
+            <RegisterForm
+              setIsRegistered={setIsRegistered}
+              setIsAuthenticated={setIsAuthenticated}
+              setRegistering={setRegistering}/>
+          }
+          {handleCondition("connecting") && 
+            <LoginForm
+              setCompostersData={setCompostersData}/>
+          }
+          {handleCondition("addCollectionPoint") &&
+            <AddCollectionPoint 
+              setIsAddCollectionPoint={setIsAddCollectionPoint}/>
+          }
+          {handleCondition("profile") && 
+            <Profile
+              setIsAddCollectionPoint={setIsAddCollectionPoint}
+              setCheckingProfile={setCheckingProfile}
+              compostersData={compostersData}
+              updateProfile={updateProfile}
+              />
+          }
+           </main>
       </Router>
     </div>
   );

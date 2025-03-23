@@ -11,20 +11,24 @@ class User(AbstractUser):
     password     = models.CharField(max_length=255)
     first_name   = models.CharField(max_length=255, blank=True)
     last_name    = models.CharField(max_length=255, default="...")
+    owned_composters = models.ManyToManyField('core.CollectionPoint', related_name='owned_composters', default=[])
+    subscribed_composters = models.ManyToManyField('core.CollectionPoint', related_name='subscribed_composters', default=[])
     created_at   = models.DateTimeField(auto_now_add=True)
     updated_at   = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return {
-            'id': self.id,
-            'username': self.username,
+            'id'          : self.id,
+            'username'    : self.username,
             'phone_number': self.phone_number,
-            'email': self.email,
-            'address': self.address,
-            'quiz_score': self.quiz_score,
-            'password': self.password,
-            'first_name': self.first_name,
-            'last_name': self.last_name,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at,
+            'email'       : self.email,
+            'address'     : self.address,
+            'quiz_score'  : self.quiz_score,
+            'password'    : self.password,
+            'first_name'  : self.first_name,
+            'owned_composters' : self.owned_composters,
+            'subscribed_composters' : self.subscribed_composters,
+            'last_name'   : self.last_name,
+            'created_at'  : self.created_at,
+            'updated_at'  : self.updated_at,
         }

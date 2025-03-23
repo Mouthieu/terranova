@@ -1,30 +1,26 @@
 import React from 'react';
+import axios from 'axios';
 import '../styles/Profile.css';
 import MyComposter from './MyComposter.js'
+import MySubscription from './MySubscription.js'
 
 // Images temporaires
 const composteurImage = "https://placehold.co/200x200?text=Composteur";
-const abonnementImage = "https://placehold.co/400x300?text=Abonnement";
 
-const Profile = ({ setIsAddCollectionPoint, setCheckingProfile }) => {
-  const [data, setData] = React.useState(null)
-  const [composters, setComposters] = React.useState(null)
-  const [refresh, setRefresh] = React.useState(0)
+const Profile = ({ setIsAddCollectionPoint, setCheckingProfile, updateProfile }) => {
+  const [userInfo, setUserInfo] = React.useState(null)
 
   React.useEffect(() => {
     const user_info = localStorage.getItem('user_info')
-    const compo = localStorage.getItem('composters')
     try {
-      setData(JSON.parse(user_info).user)
-      setComposters(JSON.parse(compo))
+      const a = JSON.parse(user_info)
+      setUserInfo(a.user)
     } catch (e) {}
-  }, [refresh])
+  }, [])
 
-  const handleComposterUpdate = () => {
-    setRefresh(prev => prev + 1)
+  if (updateProfile) {
+    return null
   }
-
-  console.log(composters)
 
   return (
     <div className="profile-container">
@@ -36,27 +32,27 @@ const Profile = ({ setIsAddCollectionPoint, setCheckingProfile }) => {
         <div className="info-grid">
           <div className="info-item">
             <span className="info-label">Nom d'utilisateur :</span>
-            <span className="info-value">{data && data.username}</span>
+            <span className="info-value">{userInfo && userInfo.username}</span>
           </div>
           <div className="info-item">
             <span className="info-label">Nom :</span>
-            <span className="info-value">{data && data.last_name}</span>
+            <span className="info-value">{userInfo && userInfo.last_name}</span>
           </div>
           <div className="info-item">
             <span className="info-label">Prénom :</span>
-            <span className="info-value">{data && data.first_name}</span>
+            <span className="info-value">{userInfo && userInfo.first_name}</span>
           </div>
           <div className="info-item">
             <span className="info-label">Tel :</span>
-            <span className="info-value">{data && data.phone_number}</span>
+            <span className="info-value">{userInfo && userInfo.phone_number}</span>
           </div>
           <div className="info-item">
             <span className="info-label">Adresse mail :</span>
-            <span className="info-value">{data && data.email}</span>
+            <span className="info-value">{userInfo && userInfo.email}</span>
           </div>
           <div className="info-item">
             <span className="info-label">Adresse :</span>
-            <span className="info-value">{data && data.address}</span>
+            <span className="info-value">{userInfo && userInfo.address}</span>
           </div>
           <div className="info-item">
             <span className="info-label">Note :</span>
@@ -72,8 +68,8 @@ const Profile = ({ setIsAddCollectionPoint, setCheckingProfile }) => {
           <h2 className="section-title">Mon composteur</h2>
         <div className="section-header">
           <div className='composteur-container prof'>
-          {composters && composters.map((composter) => (
-            <MyComposter key={composter.id} composter={composter} setCheckingProfile={setCheckingProfile} onUpdate={handleComposterUpdate} />
+          {userInfo && userInfo.owned_composters.map((composter) => (
+            <MyComposter key={composter.id} composter={composter} />
           ))}
           </div>
         </div>
@@ -84,22 +80,8 @@ const Profile = ({ setIsAddCollectionPoint, setCheckingProfile }) => {
       <section className="profile-section">
         <h2 className="section-title">Abonnements</h2>
         <div className="subscriptions-grid">
-          {[1, 2, 3, 4].map((num) => (
-            <div key={num} className="subscription-card">
-              <div className="subscription-image-container">
-                <img src={abonnementImage} alt={`Composte ${num}`} />
-                <button className="delete-icon-button">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="currentColor"/>
-                  </svg>
-                </button>
-              </div>
-              <h3>Composte {num}</h3>
-              <p>Propriétaire</p>
-              <p>Numéro</p>
-              <p>Localisation</p>
-              <p>Horaires</p>
-            </div>
+          {userInfo && userInfo.subscribed_composters.map((composter) => (
+            <MySubscription key={composter.id} composter={composter} user_id={userInfo.id}/>
           ))}
         </div>
       </section>

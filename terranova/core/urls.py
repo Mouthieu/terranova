@@ -8,9 +8,11 @@ router.register(r'collection-points', CollectionPointViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('subscribe/<int:collection_point_id>/', views.subscribe),
-    path('unsubscribe/<int:collection_point_id>/', views.unsubscribe),
+    path('subscribe/<int:user_id>/<int:collection_point_id>/', views.subscribe),
+    path('unsubscribe/<int:user_id>/<int:collection_point_id>/', views.unsubscribe),
     path('add-collection-point/', views.add_collection_point),
+    path('get-collection-points/<int:collection_point_id>/', views.get_collection_points),
     path('get-collection-points-owner/<int:owner_id>/', views.get_collection_points_owner),
     path('delete-collection-point/<int:collection_point_id>/', views.delete_collection_point),
+    path('get-subscriptions/<int:user_id>/', views.get_subscriptions),
 ]

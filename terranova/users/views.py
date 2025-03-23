@@ -46,6 +46,12 @@ class UserViewSet(viewsets.ModelViewSet):
     def me(self, request):
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
+    
+@api_view(['GET'])
+def get_user_info(request, user_id):
+    user = User.objects.get(id=user_id)
+    serializer = UserSerializer(user)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def get_composters(request):

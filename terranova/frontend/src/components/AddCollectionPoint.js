@@ -58,7 +58,7 @@ const AddCollectionPoint = ({ setIsAddCollectionPoint }) => {
 
             // Utiliser l'API de géocodage d'OpenStreetMap avec l'adresse complète
             const response = await fetch(
-                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullAddress)}&limit=1`
+                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullAddress)}&limit=1&countrycodes=fr&addressdetails=1`
             );
             const data = await response.json();
             console.log("Résultat du géocodage:", data);

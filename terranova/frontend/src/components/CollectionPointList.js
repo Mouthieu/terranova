@@ -7,9 +7,9 @@ import SubscribeButton from './SubscribeButton';
 import marker_icon_green from '../imgs/marker-icon-green.png';
 import marker_icon_yellow from '../imgs/marker-icon-yellow.png';
 
-const CollectionPointList = () => {
+const CollectionPointList = ({ isAuthenticated }) => {
   const [collectionPoints, setCollectionPoints] = useState([]);
-  const token = localStorage.getItem('token');
+  const [userInfo, setUserInfo] = useState(null);
 
   const green_icon = new L.Icon({
     iconUrl: marker_icon_green,
@@ -32,8 +32,13 @@ const CollectionPointList = () => {
     shadowAnchor: [12, 41],
     className: 'yellow-icon icon',
   });
-
+  
   useEffect(() => {
+    try {
+      const user_info = localStorage.getItem('user_info');
+      setUserInfo(JSON.parse(user_info).user);
+    } catch (e) {}
+
     axios
       .get('http://127.0.0.1:8000/api/collection-points/', {})
       .then((response) => {
@@ -42,7 +47,7 @@ const CollectionPointList = () => {
       .catch((error) => {
         console.error('Erreur lors de la récupération des points de collecte', error);
       });
-  }, [token]);
+  }, []);
 
   return (
     <div className="map-page-container">
@@ -69,7 +74,7 @@ const CollectionPointList = () => {
                     <p className="compost-info-item">Capacité : {point.capacity}</p>
                     <p className="compost-info-item">Horaires : {point.horaires}</p>
                     <div className="subscribe-button-container">
-                      <SubscribeButton collectionPoint={point} className="subscribe-button"/>
+                      <SubscribeButton collectionPoint={point} userInfo={userInfo} isAuthenticated={isAuthenticated} className="subscribe-button"/>
                     </div>
                   </div>
                 </div>

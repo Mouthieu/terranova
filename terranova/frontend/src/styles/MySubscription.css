@@ -1,0 +1,63 @@
+/* Styles pour la section Abonnements */
+.subscriptions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.subscription-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.subscription-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 75%; /* Ratio 4:3 */
+}
+
+.subscription-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.delete-icon-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #FF5252;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+}
+
+.delete-icon-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.delete-icon-button:hover {
+    background-color: #FF1744;
+}
+
+.subscription-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 15px;
+}
+
+.subscription-card p {
+    margin: 10px 15px;
+    color: #666;
+} 

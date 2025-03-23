@@ -17,8 +17,8 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
 
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated]) 
-def subscribe(request, collection_point_id):
-    user = request.user
+def subscribe(request, user_id, collection_point_id):
+    user = User.objects.get(id=user_id)
     collection_point = CollectionPoint.objects.get(id=collection_point_id)
 
     # Vérifier si l'utilisateur est déjà abonné à ce point de collecte
@@ -27,12 +27,13 @@ def subscribe(request, collection_point_id):
 
     # Créer l'abonnement
     Subscription.objects.create(user=user, collection_point=collection_point)
+    user.subscribed_composters.add(collection_point)
     return Response({'message': 'You have successfully subscribed to this collection point'}, status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated]) 
-def unsubscribe(request, collection_point_id):
-    user = request.user
+def unsubscribe(request, user_id, collection_point_id):
+    user = User.objects.get(id=user_id)
     collection_point = CollectionPoint.objects.get(id=collection_point_id)
 
     # Vérifier si l'utilisateur est abonné à ce point de collecte
@@ -42,9 +43,16 @@ def unsubscribe(request, collection_point_id):
 
     # Supprimer l'abonnement
     subscription.delete()
+    user.subscribed_composters.remove(collection_point)
     return Response({'message': 'You have successfully unsubscribed from this collection point'}, status=status.HTTP_200_OK)
 
 User = get_user_model()
+
+@api_view(['GET'])
+def get_collection_points(request, collection_point_id):
+    collection_point = CollectionPoint.objects.get(id=collection_point_id)
+    serializer = CollectionPointSerializer(collection_point)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def add_collection_point(request):
@@ -64,6 +72,7 @@ def add_collection_point(request):
             photo=data.get('photo'),
             owner=owner  # Utiliser l'objet User récupéré
         )
+        owner.owned_composters.add(collection_point)
         serializer = CollectionPointSerializer(collection_point)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except User.DoesNotExist:
@@ -80,6 +89,8 @@ def add_collection_point(request):
 @api_view(['DELETE'])
 def delete_collection_point(request, collection_point_id):
     collection_point = CollectionPoint.objects.get(id=collection_point_id)
+    owner = collection_point.owner
+    owner.owned_composters.remove(collection_point)
     collection_point.delete()
     return Response({'message': 'Collection point deleted successfully'}, status=status.HTTP_200_OK)
 
@@ -98,3 +109,9 @@ def get_collection_points_owner(request, owner_id):
 class SubscriptionViewSet(viewsets.ModelViewSet):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
+
+@api_view(['GET'])
+def get_subscriptions(request, user_id):
+    subscriptions = Subscription.objects.filter(user=user_id)
+    serializer = SubscriptionSerializer(subscriptions, many=True)
+    return Response(serializer.data)

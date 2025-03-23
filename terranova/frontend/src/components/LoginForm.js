@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import '../styles/LoginForm.css';
 
 const LoginForm = ({ isAuthenticated, setIsAuthenticated }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -15,29 +13,30 @@ const LoginForm = ({ isAuthenticated, setIsAuthenticated }) => {
 
 
     try {
+      const temp_subs = []
+      // Requête pour se connecter: Accès à la table des utilisateurs
       const response = await axios.post('http://127.0.0.1:8000/api/login/', {
         username: formData.username,
         password: formData.password,
       })
-      // .then(async (response) => {
-      //   const user_id = response.data.user.id
-      //   const composters = await axios.get('http://127.0.0.1:8000/api/get-collection-points-owner/' + user_id)
-      //   response.data.user.composters = composters.data
 
-      //   console.log(response.data)
-      //   localStorage.setItem('authenticated', true);
-      //   localStorage.setItem('user_info', JSON.stringify(response.data));
-        
-      //   window.location.reload();
-      // })
-      // .catch((error) => {
-      //   console.error('Erreur lors de la connexion', error);
-      //   alert('Nom d\'utilisateur ou mot de passe incorrect');
-      // })
       const user_id = response.data.user.id
+
+      // Requête pour récupérer les points de collecte de l'utilisateur
       const composters = await axios.get('http://127.0.0.1:8000/api/get-collection-points-owner/' + user_id)
+      
+      // Requête pour récupérer les abonnements de l'utilisateur
+      const subscriptions = await axios.get('http://127.0.0.1:8000/api/get-subscriptions/' + user_id)
+      
+      subscriptions.data.map(async (subscription) => {
+        const collection_point = await axios.get('http://127.0.0.1:8000/api/get-collection-points/' + subscription.collection_point)
+        .then((compo_data) => {
+          temp_subs.push(compo_data.data)
+          localStorage.setItem('subscriptions', JSON.stringify(temp_subs))
+        })
+      })
+    
       localStorage.setItem('user_info', JSON.stringify(response.data))
-      localStorage.setItem('composters', JSON.stringify(composters.data))
       localStorage.setItem('authenticated', true);
       window.location.reload();
 

@@ -2,20 +2,23 @@ import React from 'react';
 import axios from 'axios';
 import '../styles/MyComposter.css';
 
-const MyComposter = ({ composter, setCheckingProfile, onUpdate }) => {
+const MyComposter = ({ composter }) => {
+  const [deleted, setDeleted] = React.useState(false)
   const deleteComposter = (composter_id) => {
     axios.delete(`http://127.0.0.1:8000/api/delete-collection-point/${composter_id}/`)
     .then(response => {
       console.log(response)
-      let composters = JSON.parse(localStorage.getItem('composters'))
-      composters = composters.filter(composter => composter.id !== composter_id)
-      localStorage.setItem('composters', JSON.stringify(composters))
-      onUpdate()
+      setDeleted(true)
     })
     .catch(error => {
       console.log(error)
     })
   }
+
+  if (deleted) {
+    return null
+  }
+
   return (
     <div>
         <button className="delete-button" onClick={() => deleteComposter(composter.id)}>Supprimer</button>
