@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TerraNova - Compostage Urbain</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: url('imgs/header.jpg') no-repeat center center/cover;
+            color: white;
+            padding: 80px 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px 0;
+            color: white;
+            background: #ff9800;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        section {
+            padding: 40px;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .feature {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 30%;
+        }
+        footer {
+            background: #333;
+            color: white;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .feature {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .image-container {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TerraNova : Composter en ville, c’est possible et facile !</h1>
+        <p>Découvrez comment localiser, partager et optimiser le compostage urbain grâce à notre plateforme interactive.</p>
+        <a href="#carte" class="btn">Accéder à la carte des composteurs</a>
+    </header>
+
+    <section id="why">
+        <h2>Pourquoi le compostage en ville est un défi ?</h2>
+        <p>Chaque année, des tonnes de déchets organiques finissent à la poubelle alors qu’ils pourraient être valorisés en compost.</p>
+        <p>TerraNova est là pour changer ça !</p>
+    </section>
+
+    <section id="solution">
+        <h2>Notre solution</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Localiser les composteurs</h3>
+                <p>Une carte interactive pour trouver facilement un point de compostage proche.</p>
+                <div class="image-container">
+                    <img src="imgs/carte.png" alt="Localiser les composteurs">
+                </div>
+            </div>
+            <div class="feature">
+                <h3>Partager avec la communauté</h3>
+                <p>Échangez des avis et participez à des événements de compostage.</p>
+                <div class="image-container">
+                    <img src="imgs/partage.jpg" alt="Partager avec la communauté">
+                </div>
+            </div>
+            <div class="feature">
+                <h3>Accéder à des guides</h3>
+                <p>Toutes les bonnes pratiques pour composter sans souci.</p>
+                <div class="image-container">
+                    <img src="imgs/guide.jpg" alt="Accéder à des guides">
+                </div>  
+            </div>
+        </div>
+    </section>
+    
+
+    <section id="testimonials">
+        <h2>Ils parlent de nous</h2>
+        <p>"Grâce à TerraNova, j’ai enfin trouvé un composteur près de chez moi et je peux échanger avec d’autres habitants !" – Marie</p>
+        <p>"Une initiative incroyable pour encourager le compostage en ville !" – Christophe</p>
+    </section>
+
+    <section id="cta">
+        <h2>Rejoignez l’aventure TerraNova !</h2>
+        <a href="#" class="btn">Créer un compte</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 TerraNova - Compostons ensemble !</p>
+    </footer>
+</body>
+</html>
