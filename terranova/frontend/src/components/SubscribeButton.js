@@ -20,6 +20,9 @@ const SubscribeButton = ({ collectionPoint, isAuthenticated }) => {
       alert('Vous devez être connecté pour vous abonner.');
       return;
     }
+    const user_info = localStorage.getItem('user_info')
+    const userInfo = JSON.parse(user_info)
+
     const user = userInfo;
 
     try {
@@ -43,7 +46,7 @@ const SubscribeButton = ({ collectionPoint, isAuthenticated }) => {
       console.error('Erreur lors de l\'abonnement', error);
       alert('Une erreur est survenue lors de l\'abonnement');
     }
-    UpdateUserInfo(user.id)
+    UpdateUserInfo(user)
   };
 
   return (

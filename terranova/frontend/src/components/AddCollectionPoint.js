@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/AddCollectionPoint.css';
 import axios from 'axios';
+import UpdateUserInfo from './UpdateUserInfo';
 
 const AddCollectionPoint = ({ setIsAddCollectionPoint }) => {
     const [formData, setFormData] = useState({
@@ -58,7 +59,7 @@ const AddCollectionPoint = ({ setIsAddCollectionPoint }) => {
 
             // Utiliser l'API de géocodage d'OpenStreetMap avec l'adresse complète
             const response = await fetch(
-                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullAddress)}&limit=1&countrycodes=fr&addressdetails=1`
+                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullAddress)}`
             );
             const data = await response.json();
             console.log("Résultat du géocodage:", data);
@@ -71,10 +72,9 @@ const AddCollectionPoint = ({ setIsAddCollectionPoint }) => {
 
                 console.log("Coordonnées trouvées:", coordinates);
 
-                const user = JSON.parse(localStorage.getItem('user_info')).user;
+                const user = JSON.parse(localStorage.getItem('user_info'));
 
-                // Sauvegarder dans la base de données
-                const saveResponse = await axios.post('http://localhost:8000/api/add-collection-point/', {
+                const msg = {
                     address: formData.address,
                     code_postal: formData.code_postal,
                     ville: formData.ville,
@@ -85,26 +85,27 @@ const AddCollectionPoint = ({ setIsAddCollectionPoint }) => {
                     horaires: formData.horaires,
                     photo: formData.photo,
                     owner: parseInt(user.id)
-                });
-
-                console.log("Réponse du backend:", saveResponse.data);
-
-                if (saveResponse.data) {
-                    alert('Point de collecte ajouté avec succès !');
-                    let composters = JSON.parse(localStorage.getItem('composters'))
-                    composters.push(saveResponse.data)
-                    localStorage.setItem('composters', JSON.stringify(composters))
-                    setIsAddCollectionPoint(false);
-                    setFormData({
-                        address: '',
-                        code_postal: '',
-                        ville: '',
-                        capacity: '',
-                        horaires: '',
-                        photo: null
-                    });
-                    window.location.reload();
                 }
+
+                // Sauvegarder dans la base de données
+                const saveResponse = await axios.post('http://localhost:8000/api/add-collection-point/', msg)
+                    .then((response) => {
+                        if (response.data) {
+                            alert('Point de collecte ajouté avec succès !');
+                            setFormData({
+                                address: '',
+                                code_postal: '',
+                                ville: '',
+                                capacity: '',
+                                horaires: '',
+                                photo: null
+                            });
+                        }
+                        user.owned_composters.push(response.data);
+                        UpdateUserInfo(user)
+                        // window.location.reload();
+                    })
+                    .catch()
             } else {
                 setError('Adresse non trouvée. Vérifiez que l\'adresse, le code postal et la ville sont corrects.');
             }

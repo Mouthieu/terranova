@@ -11,11 +11,24 @@ const Profile = ({ setIsAddCollectionPoint, setCheckingProfile, updateProfile })
   const [userInfo, setUserInfo] = React.useState(null)
 
   React.useEffect(() => {
-    const user_info = localStorage.getItem('user_info')
-    try {
-      const a = JSON.parse(user_info)
-      setUserInfo(a.user)
-    } catch (e) {}
+    const user_info = JSON.parse(localStorage.getItem('user_info')) || {
+      owned_composters: [],
+      subscribed_composters: []
+    }
+    setUserInfo(user_info)
+  }, [])
+
+  React.useEffect(() => {
+    const handleStorageChange = () => {
+      const updatedUserInfo = JSON.parse(localStorage.getItem('user_info'))
+      setUserInfo(updatedUserInfo)
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+    }
   }, [])
 
   if (updateProfile) {
@@ -81,7 +94,7 @@ const Profile = ({ setIsAddCollectionPoint, setCheckingProfile, updateProfile })
         <h2 className="section-title">Abonnements</h2>
         <div className="subscriptions-grid">
           {userInfo && userInfo.subscribed_composters.map((composter) => (
-            <MySubscription key={composter.id} composter={composter} user_id={userInfo.id}/>
+            <MySubscription key={composter.id} composter={composter} user={userInfo}/>
           ))}
         </div>
       </section>

@@ -36,7 +36,7 @@ const LoginForm = ({ isAuthenticated, setIsAuthenticated }) => {
         })
       })
     
-      localStorage.setItem('user_info', JSON.stringify(response.data))
+      localStorage.setItem('user_info', JSON.stringify(response.data.user))
       localStorage.setItem('authenticated', true);
       window.location.reload();
 

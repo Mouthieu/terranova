@@ -1,13 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 import '../styles/MyComposter.css';
+import UpdateUserInfo from './UpdateUserInfo';
 
 const MyComposter = ({ composter }) => {
   const [deleted, setDeleted] = React.useState(false)
   const deleteComposter = (composter_id) => {
     axios.delete(`http://127.0.0.1:8000/api/delete-collection-point/${composter_id}/`)
     .then(response => {
-      console.log(response)
+      const user = JSON.parse(localStorage.getItem('user_info'))
+
+      user.owned_composters = user.owned_composters.filter(composter => composter.id !== composter_id)
+      
+      UpdateUserInfo(user)
       setDeleted(true)
     })
     .catch(error => {

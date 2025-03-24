@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const UpdateUserInfo = (user_id) => {
-    axios.get(`http://127.0.0.1:8000/api/get_user_info/${user_id}/`)
+const UpdateUserInfo = (user) => {
+    axios.get(`http://127.0.0.1:8000/api/get_user_info/${user.id}/`)
     .then(response => {
         console.log(response.data)
         localStorage.setItem('user_info', JSON.stringify(response.data))
